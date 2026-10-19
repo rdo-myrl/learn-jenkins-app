@@ -9,16 +9,15 @@ pipeline {
                     reuseNode true
                 }
             }
-            environment {
-                npm_config_cache = "${WORKSPACE}/.npm"
-            }
             steps {
                 sh '''
-                    rm -rf node_modules
+                    ls -la
+                    echo "Building the application..."
                     node --version
                     npm --version
-                    npm ci --no-audit --no-fund || { tail -n 80 .npm/_logs/*-debug-0.log; exit 1; }
+                    npm ci
                     npm run build
+                    ls -la
                 '''
             }
         }
