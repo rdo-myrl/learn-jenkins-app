@@ -15,7 +15,9 @@ pipeline {
                     echo "Building the application..."
                     node --version
                     npm --version
-                    npm ci
+                    rm -rf node_modules .npm
+                    npm ci --cache .npm --no-audit --no-fund --prefer-offline --maxsockets=4
+                    test -x node_modules/.bin/react-scripts
                     npm run build
                     ls -la
                 '''
